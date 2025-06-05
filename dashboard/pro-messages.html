@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Messages - ServiceHub</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-gray-100">
+    <!-- Navigation -->
+    <nav class="bg-blue-600 text-white shadow-lg">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center space-x-2">
+                <i class="fas fa-tools text-2xl"></i>
+                <a href="../index.html" class="text-xl font-bold">ServiceHub</a>
+            </div>
+            <div class="hidden md:flex space-x-6">
+                <a href="../index.html#services" class="hover:text-blue-200">Services</a>
+                <a href="../index.html#how-it-works" class="hover:text-blue-200">How It Works</a>
+                <a href="../index.html#testimonials" class="hover:text-blue-200">Testimonials</a>
+                <a href="../index.html#contact" class="hover:text-blue-200">Contact</a>
+            </div>
+            <div class="flex items-center space-x-4">
+                <div class="flex items-center space-x-2">
+                    <img id="navAvatar" src="" alt="User" class="w-8 h-8 rounded-full">
+                    <span id="navName" class="hidden md:inline"></span>
+                </div>
+                <a href="../auth/login.html" class="bg-white text-blue-600 px-4 py-2 rounded-md font-medium hover:bg-blue-50">
+                    Logout
+                </a>
+                <button class="md:hidden" id="mobileMenuToggle">
+                    <i class="fas fa-bars text-xl"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Dashboard Content -->
+    <div class="container mx-auto px-4 py-8">
+        <div class="flex flex-col md:flex-row gap-8">
+            <!-- Sidebar -->
+            <aside class="md:w-64 bg-white rounded-lg shadow-md p-4 h-fit">
+                <div class="flex items-center space-x-3 mb-6">
+                    <img id="userAvatar" src="" alt="User" class="w-12 h-12 rounded-full">
+                    <div>
+                        <h3 id="userName" class="font-semibold"></h3>
+                        <p id="userSince" class="text-sm text-gray-500"></p>
+                        <span class="inline-block bg-green-100 text-green-800 text-xs px-2 py-1 rounded-full mt-1">PRO</span>
+                    </div>
+                </div>
+                
+                <nav class="space-y-1">
+                    <a href="pro-dashboard.html" class="flex items-center space-x-2 px-3 py-2 text-gray-600 hover:bg-gray-100 rounded-md">
+                        <i class="fas fa-tachometer-alt w-5"></i>
+                        <span>Dashboard</span>
+                    </a>
+                    <a href="profile.html" class="flex items-center space-x-2 px-3 py-2 text-gray-600 hover:bg-gray-100 rounded-md">
+                        <i class="fas fa-user w-5"></i>
+                        <span>Profile</span>
+                    </a>
+                    <a href="services.html" class="flex items-center space-x-2 px-3 py-2 text-gray-600 hover:bg-gray-100 rounded-md">
+                        <i class="fas fa-tools w-5"></i>
+                        <span>My Services</span>
+                    </a>
+                    <a href="bookings.html" class="flex items-center space-x-2 px-3 py-2 text-gray-600 hover:bg-gray-100 rounded-md">
+                        <i class="fas fa-calendar-check w-5"></i>
+                        <span>Bookings</span>
+                    </a>
+                    <a href="reviews.html" class="flex items-center space-x-2 px-3 py-2 text-gray-600 hover:bg-gray-100 rounded-md">
+                        <i class="fas fa-star w-5"></i>
+                        <span>Reviews</span>
+                    </a>
+                    <a href="earnings.html" class="flex items-center space-x-2 px-3 py-2 text-gray-600 hover:bg-gray-100 rounded-md">
+                        <i class="fas fa-dollar-sign w-5"></i>
+                        <span>Earnings</span>
+                    </a>
+                    <a href="messages.html" class="flex items-center space-x-2 px-3 py-2 bg-blue-50 text-blue-600 rounded-md">
+                        <i class="fas fa-envelope w-5"></i>
+                        <span>Messages</span>
+                    </a>
+                    <a href="settings.html" class="flex items-center space-x-2 px-3 py-2 text-gray-600 hover:bg-gray-100 rounded-md">
+                        <i class="fas fa-cog w-5"></i>
+                        <span>Settings</span>
+                    </a>
+                </nav>
+            </aside>
+            
+            <!-- Main Content -->
+            <main class="flex-1">
+                <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+                    <h2 class="text-2xl font-bold mb-6">Messages</h2>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <!-- Conversation List -->
+                        <div class="md:col-span-1 border-r border-gray-200 pr-6">
+                            <div class="relative mb-4">
+                                <input type="text" placeholder="Search conversations..." class="w-full pl-10 pr-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                <i class="fas fa-search absolute left-3 top-3 text-gray-400"></i>
+                            </div>
+                            
+                            <div class="space-y-2 max-h-[calc(100vh-200px)] overflow-y-auto">
+                                <!-- Conversation Item -->
+                                <div class="p-3 rounded-lg bg-blue-50 border border-blue-100">
+                                    <div class="flex items-center space-x-3">
+                                        <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Client" class="w-10 h-10 rounded-full">
+                                        <div class="flex-1 min-w-0">
+                                            <p class="text-sm font-medium text-gray-900">Sarah Johnson</p>
+                                            <p class="text-xs text-gray-500 truncate">Plumbing Service - Order #78945</p>
+                                        </div>
+                                        <span class="text-xs text-gray-500">2h ago</span>
+                                    </div>
+                                    <p class="mt-2 text-sm text-gray-600 truncate">Hi there, I'll be arriving at 10am as scheduled...</p>
+                                </div>
+                                
+                                <!-- Conversation Item -->
+                                <div class="p-3 rounded-lg hover:bg-gray-50 cursor-pointer">
+                                    <div class="flex items-center space-x-3">
+                                        <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Client" class="w-10 h-10 rounded-full">
+                                        <div class="flex-1 min-w-0">
+                                            <p class="text-sm font-medium text-gray-900">Robert Davis</p>
+                                            <p class="text-xs text-gray-500 truncate">Painting Service - Order #78944</p>
+                                        </div>
+                                        <span class="text-xs text-gray-500">1d ago</span>
+                                    </div>
+                                    <p class="mt-2 text-sm text-gray-600 truncate">Thanks for the great work on my living room...</p>
+                                </div>
+                                
+                                <!-- More conversation items -->
+                            </div>
+                        </div>
+                        
+                        <!-- Message Area -->
+                        <div class="md:col-span-2">
+                            <div class="border-b pb-4 mb-4">
+                                <div class="flex items-center space-x-3">
+                                    <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Client" class="w-10 h-10 rounded-full">
+                                    <div>
+                                        <h3 class="font-medium">Sarah Johnson</h3>
+                                        <p class="text-sm text-gray-500">Plumbing Service - Order #78945</p>
+                                    </div>
+                                    <div class="ml-auto">
+                                        <button class="p-2 text-gray-500 hover:text-gray-700">
+                                            <i class="fas fa-phone"></i>
+                                        </button>
+                                        <button class="p-2 text-gray-500 hover:text-gray-700">
+                                            <i class="fas fa-video"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="space-y-4 max-h-[calc(100vh-300px)] overflow-y-auto mb-4">
+                                <!-- Received Message -->
+                                <div class="flex items-start space-x-3">
+                                    <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Client" class="w-8 h-8 rounded-full mt-1">
+                                    <div>
+                                        <div class="bg-gray-100 rounded-lg p-3 max-w-xs md:max-w-md">
+                                            <p class="text-sm">Hi there, I'll be arriving at 10am as scheduled. Please let me know if you have any questions before then.</p>
+                                        </div>
+                                        <p class="text-xs text-gray-500 mt-1">Today, 9:15 AM</p>
+                                    </div>
+                                </div>
+                                
+                                <!-- Sent Message -->
+                                <div class="flex items-start space-x-3 justify-end">
+                                    <div class="text-right">
+                                        <div class="bg-blue-100 rounded-lg p-3 max-w-xs md:max-w-md">
+                                            <p class="text-sm">Thanks Sarah, that works perfectly. I'll see you at 10!</p>
+                                        </div>
+                                        <p class="text-xs text-gray-500 mt-1">Today, 9:20 AM</p>
+                                    </div>
+                                    <img id="messageUserAvatar" src="" alt="You" class="w-8 h-8 rounded-full mt-1">
+                                </div>
+                                
+                                <!-- Received Message -->
+                                <div class="flex items-start space-x-3">
+                                    <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Client" class="w-8 h-8 rounded-full mt-1">
+                                    <div>
+                                        <div class="bg-gray-100 rounded-lg p-3 max-w-xs md:max-w-md">
+                                            <p class="text-sm">Great! Also, I wanted to ask if you could take a look at our bathroom sink too while you're here? It's been draining slowly.</p>
+                                        </div>
+                                        <p class="text-xs text-gray-500 mt-1">Today, 9:22 AM</p>
+                                    </div>
+                                </div>
+                                
+                                <!-- Sent Message -->
+                                <div class="flex items-start space-x-3 justify-end">
+                                    <div class="text-right">
+                                        <div class="bg-blue-100 rounded-lg p-3 max-w-xs md:max-w-md">
+                                            <p class="text-sm">Absolutely, I can take a look. There may be an additional charge depending on what's needed, but I'll assess it first.</p>
+                                        </div>
+                                        <p class="text-xs text-gray-500 mt-1">Today, 9:25 AM</p>
+                                    </div>
+                                    <img id="messageUserAvatar" src="" alt="You" class="w-8 h-8 rounded-full mt-1">
+                                </div>
+                            </div>
+                            
+                            <!-- Message Input -->
+                            <div class="border-t pt-4">
+                                <div class="relative">
+                                    <textarea placeholder="Type your message..." class="w-full pl-4 pr-12 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" rows="2"></textarea>
+                                    <button class="absolute right-3 bottom-3 text-blue-600 hover:text-blue-800">
+                                        <i class="fas fa-paper-plane"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Load user data
+            const userData = JSON.parse(localStorage.getItem('currentUser'));
+            
+            if (!userData || userData.type !== 'seller') {
+                window.location.href = "../auth/login.html";
+                return;
+            }
+            
+            // Update UI with user data
+            document.getElementById('userAvatar').src = userData.avatar;
+            document.getElementById('navAvatar').src = userData.avatar;
+            document.getElementById('messageUserAvatar').src = userData.avatar;
+            document.getElementById('userName').textContent = userData.name;
+            document.getElementById('navName').textContent = userData.name.split(' ')[0] + '.';
+            document.getElementById('userSince').textContent = `Member since ${userData.joinDate.split('-')[0]}`;
+            
+            // Toggle mobile menu
+            document.getElementById('mobileMenuToggle').addEventListener('click', function() {
+                document.getElementById('mobileMenu').classList.toggle('hidden');
+            });
+        });
+    </script>
+</body>
+</html>

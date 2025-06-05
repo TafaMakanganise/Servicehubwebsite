@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Profile - ServiceHub</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-gray-100">
+  <!-- Navigation -->
+  <nav class="bg-blue-600 text-white shadow-lg">
+    <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+      <div class="flex items-center space-x-2">
+        <i class="fas fa-tools text-2xl"></i>
+        <a href="../../index.html" class="text-xl font-bold">ServiceHub</a>
+      </div>
+      <div class="hidden md:flex space-x-6">
+        <a href="../../index.html#services" class="hover:text-blue-200">Services</a>
+        <a href="../../index.html#how-it-works" class="hover:text-blue-200">How It Works</a>
+        <a href="../../index.html#testimonials" class="hover:text-blue-200">Testimonials</a>
+        <a href="../../index.html#contact" class="hover:text-blue-200">Contact</a>
+      </div>
+      <div class="flex items-center space-x-4">
+        <div class="relative group">
+          <button class="flex items-center space-x-1 bg-blue-700 px-3 py-2 rounded-md">
+            <img id="navAvatar" src="" alt="User" class="w-8 h-8 rounded-full">
+            <span id="navName" class="hidden md:inline"></span>
+            <i class="fas fa-chevron-down text-xs"></i>
+          </button>
+          <div class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-50 hidden group-hover:block">
+            <a href="profile.html" class="block px-4 py-2 text-gray-800 hover:bg-blue-50">Profile</a>
+            <a href="settings.html" class="block px-4 py-2 text-gray-800 hover:bg-blue-50">Settings</a>
+            <a href="../../auth/login.html" class="block px-4 py-2 text-gray-800 hover:bg-blue-50">Logout</a>
+          </div>
+        </div>
+        <button class="md:hidden" id="mobileMenuToggle">
+          <i class="fas fa-bars text-xl"></i>
+        </button>
+      </div>
+    </div>
+    
+    <!-- Mobile Menu -->
+    <div id="mobileMenu" class="md:hidden hidden bg-blue-700 px-4 py-2">
+      <div class="flex flex-col space-y-3">
+        <a href="../../index.html#services" class="hover:text-blue-200">Services</a>
+        <a href="../../index.html#how-it-works" class="hover:text-blue-200">How It Works</a>
+        <a href="../../index.html#testimonials" class="hover:text-blue-200">Testimonials</a>
+        <a href="../../index.html#contact" class="hover:text-blue-200">Contact</a>
+        <a href="profile.html" class="hover:text-blue-200">Profile</a>
+        <a href="settings.html" class="hover:text-blue-200">Settings</a>
+        <a href="../../auth/login.html" class="hover:text-blue-200">Logout</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Dashboard Content -->
+  <div class="container mx-auto px-4 py-8">
+    <div class="flex flex-col md:flex-row gap-8">
+      <!-- Sidebar -->
+      <aside class="md:w-64 bg-white rounded-lg shadow-md p-4 h-fit">
+        <div class="flex items-center space-x-3 mb-6">
+          <img id="userAvatar" src="" alt="User" class="w-12 h-12 rounded-full">
+          <div>
+            <h3 id="userName" class="font-semibold"></h3>
+            <p id="userSince" class="text-sm text-gray-500"></p>
+          </div>
+        </div>
+        
+        <nav class="space-y-1">
+          <a href="dashboard.html" class="flex items-center space-x-2 px-3 py-2 text-gray-600 hover:bg-gray-100 rounded-md">
+            <i class="fas fa-tachometer-alt w-5"></i>
+            <span>Dashboard</span>
+          </a>
+          <a href="profile.html" class="flex items-center space-x-2 px-3 py-2 bg-blue-50 text-blue-600 rounded-md">
+            <i class="fas fa-user w-5"></i>
+            <span>Profile</span>
+          </a>
+          <a href="orders.html" class="flex items-center space-x-2 px-3 py-2 text-gray-600 hover:bg-gray-100 rounded-md">
+            <i class="fas fa-clipboard-list w-5"></i>
+            <span>My Orders</span>
+          </a>
+          <a href="wishlist.html" class="flex items-center space-x-2 px-3 py-2 text-gray-600 hover:bg-gray-100 rounded-md">
+            <i class="fas fa-heart w-5"></i>
+            <span>Wishlist</span>
+          </a>
+          <a href="messages.html" class="flex items-center space-x-2 px-3 py-2 text-gray-600 hover:bg-gray-100 rounded-md">
+            <i class="fas fa-envelope w-5"></i>
+            <span>Messages</span>
+          </a>
+          <a href="notifications.html" class="flex items-center space-x-2 px-3 py-2 text-gray-600 hover:bg-gray-100 rounded-md">
+            <i class="fas fa-bell w-5"></i>
+            <span>Notifications</span>
+          </a>
+          <a href="addresses.html" class="flex items-center space-x-2 px-3 py-2 text-gray-600 hover:bg-gray-100 rounded-md">
+            <i class="fas fa-map-marker-alt w-5"></i>
+            <span>Saved Addresses</span>
+          </a>
+          <a href="settings.html" class="flex items-center space-x-2 px-3 py-2 text-gray-600 hover:bg-gray-100 rounded-md">
+            <i class="fas fa-cog w-5"></i>
+            <span>Settings</span>
+          </a>
+          <a href="booking.html" class="flex items-center space-x-2 px-3 py-2 text-gray-600 hover:bg-gray-100 rounded-md">
+            <i class="fas fa-calendar-check w-5"></i>
+            <span>Booking</span>
+          </a>
+        </nav>
+      </aside>
+      
+      <!-- Main Content -->
+      <main class="flex-1">
+        <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+          <h2 class="text-2xl font-bold mb-6">Profile</h2>
+          
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <div class="flex items-center space-x-4 mb-6">
+                <div class="relative">
+                  <img id="profileAvatar" src="" alt="Profile" class="w-20 h-20 rounded-full">
+                  <label for="avatarUpload" class="absolute bottom-0 right-0 bg-blue-600 text-white p-1 rounded-full cursor-pointer">
+                    <i class="fas fa-camera text-xs"></i>
+                    <input type="file" id="avatarUpload" accept="image/*" class="hidden">
+                  </label>
+                </div>
+                <div>
+                  <h3 id="profileName" class="text-xl font-bold"></h3>
+                  <p id="profileSince" class="text-gray-600"></p>
+                </div>
+              </div>
+              
+              <div class="space-y-4">
+                <div>
+                  <label class="block text-gray-700 font-medium mb-1">Email</label>
+                  <p id="profileEmail" class="bg-gray-50 p-2 rounded"></p>
+                </div>
+                
+                <div>
+                  <label class="block text-gray-700 font-medium mb-1">Phone</label>
+                  <input type="tel" id="profilePhone" class="w-full border border-gray-300 rounded-md p-2" placeholder="Add phone number">
+                </div>
+                
+                <div>
+                  <label class="block text-gray-700 font-medium mb-1">Address</label>
+                  <textarea id="profileAddress" class="w-full border border-gray-300 rounded-md p-2" placeholder="Add your address"></textarea>
+                </div>
+              </div>
+            </div>
+            
+            <div>
+              <h3 class="text-lg font-semibold mb-4">Account Settings</h3>
+              
+              <form id="profileForm" class="space-y-4">
+                <div>
+                  <label class="block text-gray-700 font-medium mb-1">Change Password</label>
+                  <input type="password" id="currentPassword" placeholder="Current Password" class="w-full border border-gray-300 rounded-md p-2 mb-2">
+                  <input type="password" id="newPassword" placeholder="New Password" class="w-full border border-gray-300 rounded-md p-2 mb-2">
+                  <input type="password" id="confirmPassword" placeholder="Confirm New Password" class="w-full border border-gray-300 rounded-md p-2">
+                  <div id="passwordError" class="text-red-500 text-sm hidden">Passwords do not match</div>
+                </div>
+                
+                <div>
+                  <label class="block text-gray-700 font-medium mb-1">Notification Preferences</label>
+                  <div class="space-y-2">
+                    <label class="flex items-center">
+                      <input type="checkbox" id="emailNotifications" class="rounded text-blue-600">
+                      <span class="ml-2">Email notifications</span>
+                    </label>
+                    <label class="flex items-center">
+                      <input type="checkbox" id="smsNotifications" class="rounded text-blue-600">
+                      <span class="ml-2">SMS notifications</span>
+                    </label>
+                    <label class="flex items-center">
+                      <input type="checkbox" id="pushNotifications" class="rounded text-blue-600">
+                      <span class="ml-2">Push notifications</span>
+                    </label>
+                  </div>
+                </div>
+                
+                <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 mt-4">
+                  Save Changes
+                </button>
+              </form>
+            </div>
+          </div>
+          
+          <div class="mt-6">
+            <a href="dashboard.html" class="text-blue-600 hover:underline">← Back to Dashboard</a>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Load current user data
+      const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+      const users = JSON.parse(localStorage.getItem('users')) || [];
+      
+      if (!currentUser) {
+        window.location.href = "../../auth/login.html";
+        return;
+      }
+      
+      // Update UI with user data
+      document.getElementById('userAvatar').src = currentUser.avatar;
+      document.getElementById('navAvatar').src = currentUser.avatar;
+      document.getElementById('userName').textContent = currentUser.name;
+      document.getElementById('navName').textContent = currentUser.name.split(' ')[0] + '.';
+      
+      const joinDate = new Date(currentUser.joinDate);
+      document.getElementById('userSince').textContent = `Member since ${joinDate.getFullYear()}`;
+      document.getElementById('profileSince').textContent = `Member since ${joinDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}`;
+      
+      // Profile section
+      document.getElementById('profileAvatar').src = currentUser.avatar;
+      document.getElementById('profileName').textContent = currentUser.name;
+      document.getElementById('profileEmail').textContent = currentUser.email;
+      document.getElementById('profilePhone').value = currentUser.phone || '';
+      document.getElementById('profileAddress').value = currentUser.address || '';
+      
+      // Notification preferences
+      if (currentUser.notifications) {
+        document.getElementById('emailNotifications').checked = currentUser.notifications.email || false;
+        document.getElementById('smsNotifications').checked = currentUser.notifications.sms || false;
+        document.getElementById('pushNotifications').checked = currentUser.notifications.push || false;
+      }
+      
+      // Avatar upload
+      document.getElementById('avatarUpload').addEventListener('change', function(e) {
+        const file = e.target.files[0];
+        if (file) {
+          const reader = new FileReader();
+          reader.onload = function(event) {
+            const newAvatar = event.target.result;
+            // Update all avatar images
+            document.getElementById('profileAvatar').src = newAvatar;
+            document.getElementById('userAvatar').src = newAvatar;
+            document.getElementById('navAvatar').src = newAvatar;
+            
+            // Update in current user and users array
+            currentUser.avatar = newAvatar;
+            localStorage.setItem('currentUser', JSON.stringify(currentUser));
+            
+            const userIndex = users.findIndex(u => u.email === currentUser.email);
+            if (userIndex !== -1) {
+              users[userIndex].avatar = newAvatar;
+              localStorage.setItem('users', JSON.stringify(users));
+            }
+          };
+          reader.readAsDataURL(file);
+        }
+      });
+      
+      // Password change validation
+      document.getElementById('confirmPassword').addEventListener('input', function() {
+        const newPassword = document.getElementById('newPassword').value;
+        const confirmPassword = this.value;
+        const errorElement = document.getElementById('passwordError');
+        
+        if (newPassword && confirmPassword && newPassword !== confirmPassword) {
+          errorElement.classList.remove('hidden');
+        } else {
+          errorElement.classList.add('hidden');
+        }
+      });
+      
+      // Form submission
+      document.getElementById('profileForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const newPassword = document.getElementById('newPassword').value;
+        const confirmPassword = document.getElementById('confirmPassword').value;
+        
+        if (newPassword && newPassword !== confirmPassword) {
+          document.getElementById('passwordError').classList.remove('hidden');
+          return;
+        }
+        
+        // Update user data
+        currentUser.phone = document.getElementById('profilePhone').value;
+        currentUser.address = document.getElementById('profileAddress').value;
+        currentUser.notifications = {
+          email: document.getElementById('emailNotifications').checked,
+          sms: document.getElementById('smsNotifications').checked,
+          push: document.getElementById('pushNotifications').checked
+        };
+        
+        // Update password if changed
+        if (newPassword) {
+          currentUser.password = newPassword;
+        }
+        
+        // Update in localStorage
+        localStorage.setItem('currentUser', JSON.stringify(currentUser));
+        
+        const userIndex = users.findIndex(u => u.email === currentUser.email);
+        if (userIndex !== -1) {
+          users[userIndex] = currentUser;
+          localStorage.setItem('users', JSON.stringify(users));
+        }
+        
+        alert('Profile updated successfully!');
+      });
+      
+      // Mobile menu toggle
+      document.getElementById('mobileMenuToggle').addEventListener('click', function() {
+        document.getElementById('mobileMenu').classList.toggle('hidden');
+      });
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - ServiceHub</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .error-message {
+            color: #ef4444;
+            font-size: 0.875rem;
+            margin-top: 0.25rem;
+        }
+        .user-type-btn {
+            transition: all 0.3s ease;
+        }
+        .user-type-btn.active {
+            background-color: #2563eb;
+            color: white;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Navigation -->
+    <nav class="bg-blue-600 text-white shadow-lg">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center space-x-2">
+                <i class="fas fa-tools text-2xl"></i>
+                <a href="../index.html" class="text-xl font-bold">ServiceHub</a>
+            </div>
+            <div class="hidden md:flex space-x-6">
+                <a href="../index.html#services" class="hover:text-blue-200">Services</a>
+                <a href="../index.html#how-it-works" class="hover:text-blue-200">How It Works</a>
+                <a href="../index.html#testimonials" class="hover:text-blue-200">Testimonials</a>
+                <a href="../index.html#contact" class="hover:text-blue-200">Contact</a>
+            </div>
+            <div class="flex items-center space-x-4">
+                <a href="register.html" class="bg-white text-blue-600 px-4 py-2 rounded-md font-medium hover:bg-blue-50">
+                    Register
+                </a>
+                <button class="md:hidden" id="mobileMenuToggle">
+                    <i class="fas fa-bars text-xl"></i>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div id="mobileMenu" class="md:hidden hidden bg-blue-700 px-4 py-2">
+            <div class="flex flex-col space-y-3">
+                <a href="../index.html#services" class="hover:text-blue-200">Services</a>
+                <a href="../index.html#how-it-works" class="hover:text-blue-200">How It Works</a>
+                <a href="../index.html#testimonials" class="hover:text-blue-200">Testimonials</a>
+                <a href="../index.html#contact" class="hover:text-blue-200">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <section class="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-md w-full bg-white p-8 rounded-lg shadow-md">
+            <div class="text-center mb-8">
+                <h2 class="text-3xl font-bold text-gray-800">Welcome Back</h2>
+                <p class="text-gray-600 mt-2">Login to your ServiceHub account</p>
+            </div>
+            
+            <!-- User Type Selection -->
+            <div class="mb-6">
+                <label class="block text-gray-700 mb-2">I am a:</label>
+                <div class="grid grid-cols-2 gap-4">
+                    <button type="button" id="clientBtn" class="user-type-btn active py-2 px-4 border border-blue-500 rounded-md text-white font-medium bg-blue-600">
+                        <i class="fas fa-user mr-2"></i> Client
+                    </button>
+                    <button type="button" id="proBtn" class="user-type-btn py-2 px-4 border border-gray-300 rounded-md text-gray-600 font-medium">
+                        <i class="fas fa-tools mr-2"></i> Professional
+                    </button>
+                </div>
+                <input type="hidden" id="userType" name="userType" value="buyer">
+            </div>
+            
+            <form id="loginForm" class="space-y-6">
+                <div>
+                    <label for="email" class="block text-gray-700 mb-1">Email Address</label>
+                    <input type="email" id="email" name="email" class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+                    <div id="emailError" class="error-message hidden">Please enter a valid email address</div>
+                </div>
+                
+                <div>
+                    <label for="password" class="block text-gray-700 mb-1">Password</label>
+                    <input type="password" id="password" name="password" class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+                    <div id="passwordError" class="error-message hidden">Password must be at least 6 characters</div>
+                </div>
+                
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center">
+                        <input type="checkbox" id="remember" name="remember" class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded">
+                        <label for="remember" class="ml-2 block text-sm text-gray-700">Remember me</label>
+                    </div>
+                    
+                    <a href="#" class="text-sm text-blue-600 hover:text-blue-500">Forgot password?</a>
+                </div>
+                
+                <button type="submit" class="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition">
+                    Login
+                </button>
+            </form>
+            
+            <div class="mt-6 text-center">
+                <p class="text-gray-600">Don't have an account? <a href="register.html" class="text-blue-600 hover:text-blue-500">Register here</a></p>
+            </div>
+            
+            <div class="mt-6">
+                <div class="relative">
+                    <div class="absolute inset-0 flex items-center">
+                        <div class="w-full border-t border-gray-300"></div>
+                    </div>
+                    <div class="relative flex justify-center text-sm">
+                        <span class="px-2 bg-white text-gray-500">Or continue with</span>
+                    </div>
+                </div>
+                
+                <div class="mt-6 grid grid-cols-2 gap-3">
+                    <a href="#" class="w-full inline-flex justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-700 hover:bg-gray-50">
+                        <i class="fab fa-google text-blue-600"></i>
+                        <span class="ml-2">Google</span>
+                    </a>
+                    
+                    <a href="#" class="w-full inline-flex justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-700 hover:bg-gray-50">
+                        <i class="fab fa-facebook-f text-blue-600"></i>
+                        <span class="ml-2">Facebook</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-8">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-4 md:mb-0">
+                    <h3 class="text-xl font-bold flex items-center">
+                        <i class="fas fa-tools mr-2"></i> ServiceHub
+                    </h3>
+                    <p class="text-gray-400 mt-1">Connecting professionals with clients</p>
+                </div>
+                
+                <div class="flex space-x-6">
+                    <a href="#" class="text-gray-400 hover:text-white transition">Privacy Policy</a>
+                    <a href="#" class="text-gray-400 hover:text-white transition">Terms of Service</a>
+                    <a href="../support/contact.html" class="text-gray-400 hover:text-white transition">Contact</a>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400 text-sm">
+                © 2023 ServiceHub. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const loginForm = document.getElementById('loginForm');
+            const emailInput = document.getElementById('email');
+            const passwordInput = document.getElementById('password');
+            const emailError = document.getElementById('emailError');
+            const passwordError = document.getElementById('passwordError');
+            const clientBtn = document.getElementById('clientBtn');
+            const proBtn = document.getElementById('proBtn');
+            const userTypeInput = document.getElementById('userType');
+            
+            // Toggle mobile menu
+            document.getElementById('mobileMenuToggle').addEventListener('click', function() {
+                document.getElementById('mobileMenu').classList.toggle('hidden');
+            });
+            
+            // User type selection
+            clientBtn.addEventListener('click', function() {
+                clientBtn.classList.add('active', 'bg-blue-600', 'text-white', 'border-blue-500');
+                clientBtn.classList.remove('text-gray-600', 'border-gray-300');
+                
+                proBtn.classList.remove('active', 'bg-blue-600', 'text-white', 'border-blue-500');
+                proBtn.classList.add('text-gray-600', 'border-gray-300');
+                
+                userTypeInput.value = 'buyer';
+            });
+            
+            proBtn.addEventListener('click', function() {
+                proBtn.classList.add('active', 'bg-blue-600', 'text-white', 'border-blue-500');
+                proBtn.classList.remove('text-gray-600', 'border-gray-300');
+                
+                clientBtn.classList.remove('active', 'bg-blue-600', 'text-white', 'border-blue-500');
+                clientBtn.classList.add('text-gray-600', 'border-gray-300');
+                
+                userTypeInput.value = 'seller';
+            });
+            
+            // Form validation
+            emailInput.addEventListener('input', function() {
+                if (emailInput.validity.valid) {
+                    emailError.classList.add('hidden');
+                } else {
+                    emailError.classList.remove('hidden');
+                }
+            });
+            
+            passwordInput.addEventListener('input', function() {
+                if (passwordInput.value.length >= 6) {
+                    passwordError.classList.add('hidden');
+                } else {
+                    passwordError.classList.remove('hidden');
+                }
+            });
+            
+            // Form submission
+            loginForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Validate form
+                let isValid = true;
+                
+                if (!emailInput.validity.valid) {
+                    emailError.classList.remove('hidden');
+                    isValid = false;
+                }
+                
+                if (passwordInput.value.length < 6) {
+                    passwordError.classList.remove('hidden');
+                    isValid = false;
+                }
+                
+                if (isValid) {
+                    // Get form data
+                    const formData = {
+                        email: emailInput.value,
+                        password: passwordInput.value,
+                        remember: document.getElementById('remember').checked,
+                        userType: userTypeInput.value
+                    };
+                    
+                    // Check if user exists in localStorage
+                    const users = JSON.parse(localStorage.getItem('users')) || [];
+                    
+                    // Find user by email and type (buyer/seller)
+                    const user = users.find(u => 
+                        u.email === formData.email && 
+                        u.type === formData.userType
+                    );
+                    
+                    if (!user) {
+                        passwordError.textContent = 'No account found with this email and user type';
+                        passwordError.classList.remove('hidden');
+                        return;
+                    }
+                    
+                    // Check password
+                    if (user.password !== formData.password) {
+                        passwordError.textContent = 'Incorrect password';
+                        passwordError.classList.remove('hidden');
+                        return;
+                    }
+                    
+                    // Store current user data
+                    localStorage.setItem('currentUser', JSON.stringify(user));
+                    
+                    // Remember me functionality
+                    if (formData.remember) {
+                        localStorage.setItem('rememberedEmail', formData.email);
+                    } else {
+                        localStorage.removeItem('rememberedEmail');
+                    }
+                    
+                    // Redirect to appropriate dashboard based on user type
+                    if (formData.userType === 'buyer') {
+                        window.location.href = "../dashboard/client-dashboard.html";
+                    } else {
+                        window.location.href = "../dashboard/pro-dashboard.html";
+                    }
+                }
+            });
+            
+            // Check for remembered email
+            const rememberedEmail = localStorage.getItem('rememberedEmail');
+            if (rememberedEmail) {
+                emailInput.value = rememberedEmail;
+                document.getElementById('remember').checked = true;
+            }
+        });
+    </script>
+</body>
+</html>

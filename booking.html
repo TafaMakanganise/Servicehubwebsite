@@ -1,0 +1,88 @@
+<!-- booking.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Booking - ServiceHub</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-gray-100 text-gray-800">
+  <!-- Navigation -->
+  <nav class="bg-blue-600 text-white shadow-lg">
+    <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+      <div class="flex items-center space-x-2">
+        <i class="fas fa-tools text-2xl"></i>
+        <a href="index.html" class="text-xl font-bold">ServiceHub</a>
+      </div>
+      <div class="hidden md:flex space-x-6">
+        <a href="index.html#services" class="hover:text-blue-200">Services</a>
+        <a href="index.html#how-it-works" class="hover:text-blue-200">How It Works</a>
+        <a href="index.html#testimonials" class="hover:text-blue-200">Testimonials</a>
+        <a href="index.html#contact" class="hover:text-blue-200">Contact</a>
+      </div>
+      <div class="flex items-center space-x-4">
+        <a href="auth/login.html" class="bg-white text-blue-600 px-4 py-2 rounded-md font-medium hover:bg-blue-50">
+          Login
+        </a>
+        <button class="md:hidden" id="mobileMenuToggle">
+          <i class="fas fa-bars text-xl"></i>
+        </button>
+      </div>
+    </div>
+    
+    <!-- Mobile Menu -->
+    <div id="mobileMenu" class="md:hidden hidden bg-blue-700 px-4 py-2">
+      <div class="flex flex-col space-y-3">
+        <a href="index.html#services" class="hover:text-blue-200">Services</a>
+        <a href="index.html#how-it-works" class="hover:text-blue-200">How It Works</a>
+        <a href="index.html#testimonials" class="hover:text-blue-200">Testimonials</a>
+        <a href="index.html#contact" class="hover:text-blue-200">Contact</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="max-w-2xl mx-auto p-6 bg-white shadow-lg mt-10 rounded-lg">
+    <h2 class="text-2xl font-bold mb-6">Book a Service</h2>
+    <form class="space-y-4">
+      <div>
+        <label class="block font-medium mb-1">Full Name</label>
+        <input type="text" class="w-full border border-gray-300 rounded-md p-2" required>
+      </div>
+      <div>
+        <label class="block font-medium mb-1">Email</label>
+        <input type="email" class="w-full border border-gray-300 rounded-md p-2" required>
+      </div>
+      <div>
+        <label class="block font-medium mb-1">Service</label>
+        <select class="w-full border border-gray-300 rounded-md p-2" required>
+          <option value="">Select a service</option>
+          <option>Plumbing</option>
+          <option>Electrical</option>
+          <option>Cleaning</option>
+          <option>Tutoring</option>
+          <option>Handyman</option>
+        </select>
+      </div>
+      <div>
+        <label class="block font-medium mb-1">Preferred Date</label>
+        <input type="date" class="w-full border border-gray-300 rounded-md p-2" required>
+      </div>
+      <div>
+        <label class="block font-medium mb-1">Additional Notes</label>
+        <textarea class="w-full border border-gray-300 rounded-md p-2" rows="4"></textarea>
+      </div>
+      <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Submit Booking</button>
+    </form>
+  </div>
+
+  <script>
+    // Mobile menu toggle
+    document.getElementById('mobileMenuToggle').addEventListener('click', function() {
+      document.getElementById('mobileMenu').classList.toggle('hidden');
+    });
+  </script>
+  <script src="js/booking.js"></script>
+</body>
+</html>

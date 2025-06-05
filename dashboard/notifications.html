@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notifications - ServiceHub</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-gray-100">
+    <!-- Navigation -->
+    <nav class="bg-blue-600 text-white shadow-lg">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center space-x-2">
+                <i class="fas fa-tools text-2xl"></i>
+                <a href="../index.html" class="text-xl font-bold">ServiceHub</a>
+            </div>
+            <div class="hidden md:flex space-x-6">
+                <a href="../index.html#services" class="hover:text-blue-200">Services</a>
+                <a href="../index.html#how-it-works" class="hover:text-blue-200">How It Works</a>
+                <a href="../index.html#testimonials" class="hover:text-blue-200">Testimonials</a>
+                <a href="../index.html#contact" class="hover:text-blue-200">Contact</a>
+            </div>
+            <div class="flex items-center space-x-4">
+                <div class="flex items-center space-x-2">
+                    <img id="navAvatar" src="" alt="User" class="w-8 h-8 rounded-full">
+                    <span id="navName" class="hidden md:inline"></span>
+                </div>
+                <a href="../auth/login.html" class="bg-white text-blue-600 px-4 py-2 rounded-md font-medium hover:bg-blue-50">
+                    Logout
+                </a>
+                <button class="md:hidden" id="mobileMenuToggle">
+                    <i class="fas fa-bars text-xl"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Dashboard Content -->
+    <div class="container mx-auto px-4 py-8">
+        <div class="flex flex-col md:flex-row gap-8">
+            <!-- Sidebar -->
+            <aside class="md:w-64 bg-white rounded-lg shadow-md p-4 h-fit">
+                <div class="flex items-center space-x-3 mb-6">
+                    <img id="userAvatar" src="" alt="User" class="w-12 h-12 rounded-full">
+                    <div>
+                        <h3 id="userName" class="font-semibold"></h3>
+                        <p id="userSince" class="text-sm text-gray-500"></p>
+                    </div>
+                </div>
+                
+                <nav class="space-y-1">
+                    <a href="client-dashboard.html" class="flex items-center space-x-2 px-3 py-2 text-gray-600 hover:bg-gray-100 rounded-md">
+                        <i class="fas fa-tachometer-alt w-5"></i>
+                        <span>Dashboard</span>
+                    </a>
+                    <a href="profile.html" class="flex items-center space-x-2 px-3 py-2 text-gray-600 hover:bg-gray-100 rounded-md">
+                        <i class="fas fa-user w-5"></i>
+                        <span>Profile</span>
+                    </a>
+                    <a href="orders.html" class="flex items-center space-x-2 px-3 py-2 text-gray-600 hover:bg-gray-100 rounded-md">
+                        <i class="fas fa-clipboard-list w-5"></i>
+                        <span>My Orders</span>
+                    </a>
+                    <a href="wishlist.html" class="flex items-center space-x-2 px-3 py-2 text-gray-600 hover:bg-gray-100 rounded-md">
+                        <i class="fas fa-heart w-5"></i>
+                        <span>Wishlist</span>
+                    </a>
+                    <a href="messages.html" class="flex items-center space-x-2 px-3 py-2 text-gray-600 hover:bg-gray-100 rounded-md">
+                        <i class="fas fa-envelope w-5"></i>
+                        <span>Messages</span>
+                    </a>
+                    <a href="notifications.html" class="flex items-center space-x-2 px-3 py-2 bg-blue-50 text-blue-600 rounded-md">
+                        <i class="fas fa-bell w-5"></i>
+                        <span>Notifications</span>
+                    </a>
+                    <a href="saved-addresses.html" class="flex items-center space-x-2 px-3 py-2 text-gray-600 hover:bg-gray-100 rounded-md">
+                        <i class="fas fa-map-marker-alt w-5"></i>
+                        <span>Saved Addresses</span>
+                    </a>
+                    <a href="settings.html" class="flex items-center space-x-2 px-3 py-2 text-gray-600 hover:bg-gray-100 rounded-md">
+                        <i class="fas fa-cog w-5"></i>
+                        <span>Settings</span>
+                    </a>
+                    <a href="booking.html" class="flex items-center space-x-2 px-3 py-2 text-gray-600 hover:bg-gray-100 rounded-md">
+                        <i class="fas fa-calendar-check w-5"></i>
+                        <span>Booking</span>
+                    </a>
+                </nav>
+            </aside>
+            
+            <!-- Main Content -->
+            <main class="flex-1">
+                <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+                    <div class="flex justify-between items-center mb-6">
+                        <h2 class="text-2xl font-bold">Notifications</h2>
+                        <button class="text-blue-600 hover:text-blue-800 text-sm font-medium">Mark all as read</button>
+                    </div>
+                    
+                    <div class="space-y-4">
+                        <!-- Notification Item -->
+                        <div class="p-4 border-b border-gray-100 hover:bg-gray-50 rounded-lg">
+                            <div class="flex items-start space-x-3">
+                                <div class="flex-shrink-0 bg-blue-100 p-2 rounded-full text-blue-600">
+                                    <i class="fas fa-calendar-check"></i>
+                                </div>
+                                <div class="flex-1 min-w-0">
+                                    <p class="text-sm font-medium text-gray-900">Appointment Confirmed</p>
+                                    <p class="text-sm text-gray-600">Your plumbing service with Michael Smith has been confirmed for May 15 at 10:00 AM</p>
+                                    <p class="text-xs text-gray-500 mt-1">2 hours ago</p>
+                                </div>
+                                <div class="flex-shrink-0">
+                                    <span class="h-2 w-2 rounded-full bg-blue-600"></span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- More notification items -->
+                    </div>
+                    
+                    <div class="mt-6">
+                        <button class="w-full py-2 border border-gray-300 rounded-md text-sm font-medium hover:bg-gray-50">
+                            Load More Notifications
+                        </button>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Load user data
+            const userData = JSON.parse(localStorage.getItem('currentUser'));
+            
+            if (!userData || userData.type !== 'buyer') {
+                window.location.href = "../auth/login.html";
+                return;
+            }
+            
+            // Update UI with user data
+            document.getElementById('userAvatar').src = userData.avatar;
+            document.getElementById('navAvatar').src = userData.avatar;
+            document.getElementById('userName').textContent = userData.name;
+            document.getElementById('navName').textContent = userData.name.split(' ')[0] + '.';
+            document.getElementById('userSince').textContent = `Member since ${userData.joinDate.split('-')[0]}`;
+            
+            // Toggle mobile menu
+            document.getElementById('mobileMenuToggle').addEventListener('click', function() {
+                document.getElementById('mobileMenu').classList.toggle('hidden');
+            });
+        });
+    </script>
+</body>
+</html>

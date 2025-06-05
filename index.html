@@ -1,0 +1,922 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ServiceHub - Marketplace for Services</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .service-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        #map {
+            height: 300px;
+            width: 100%;
+            border-radius: 0.5rem;
+        }
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+        }
+        .video-container iframe {
+            position: absolute;
+            top:0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+        .drawer {
+            transition: transform 0.3s ease-in-out;
+        }
+        .drawer.closed {
+            transform: translateX(100%);
+        }
+        .pac-container {
+            z-index: 10000 !important;
+        }
+        .search-box {
+            background-color: #fff;
+            font-family: Roboto;
+            font-size: 15px;
+            font-weight: 300;
+            margin: 10px;
+            padding: 0 11px 0 13px;
+            text-overflow: ellipsis;
+            width: 90%;
+            border-radius: 0.375rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+        }
+        .search-box:focus {
+            border-color: #4f46e5;
+        }
+        .map-section {
+            padding: 4rem 0;
+            background-color: #f9fafb;
+        }
+        .map-container {
+            margin-top: 2rem;
+            border-radius: 0.5rem;
+            overflow: hidden;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Navigation -->
+    <nav class="bg-blue-600 text-white shadow-lg">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center space-x-2">
+                <i class="fas fa-tools text-2xl"></i>
+                <a href="#" class="text-xl font-bold">ServiceHub</a>
+            </div>
+            <div class="hidden md:flex space-x-6">
+                <a href="#services" class="hover:text-blue-200">Services</a>
+                <a href="#how-it-works" class="hover:text-blue-200">How It Works</a>
+                <a href="#testimonials" class="hover:text-blue-200">Testimonials</a>
+                <a href="#contact" class="hover:text-blue-200">Contact</a>
+            </div>
+            <div class="flex items-center space-x-4">
+                <a href="login.html" class="bg-white text-blue-600 px-4 py-2 rounded-md font-medium hover:bg-blue-50">
+                    Login
+                </a>
+                <button class="md:hidden" onclick="toggleMobileMenu()">
+                    <i class="fas fa-bars text-xl"></i>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div id="mobileMenu" class="md:hidden hidden bg-blue-700 px-4 py-2">
+            <div class="flex flex-col space-y-3">
+                <a href="#services" class="hover:text-blue-200">Services</a>
+                <a href="#how-it-works" class="hover:text-blue-200">How It Works</a>
+                <a href="#testimonials" class="hover:text-blue-200">Testimonials</a>
+                <a href="#contact" class="hover:text-blue-200">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="bg-gradient-to-r from-blue-500 to-blue-700 text-white py-16">
+        <div class="container mx-auto px-4 flex flex-col md:flex-row items-center">
+            <div class="md:w-1/2 mb-8 md:mb-0">
+                <h1 class="text-4xl md:text-5xl font-bold mb-4">Find & Hire Local Professionals</h1>
+                <p class="text-xl mb-6">Connect with skilled electricians, plumbers, tutors, and more in your area.</p>
+                <div class="flex flex-col sm:flex-row space-y-3 sm:space-y-0 sm:space-x-4">
+                    <a href="#services" class="bg-white text-blue-600 px-6 py-3 rounded-md font-bold text-center hover:bg-blue-50 transition">Browse Services</a>
+                    <a href="#how-it-works" class="bg-transparent border-2 border-white px-6 py-3 rounded-md font-bold text-center hover:bg-white hover:text-blue-600 transition">How It Works</a>
+                </div>
+            </div>
+            <div class="md:w-1/2">
+                <img src="https://images.unsplash.com/photo-1551434678-e076c223a692?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" 
+                     alt="Professional services" 
+                     class="rounded-lg shadow-xl w-full h-auto">
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center mb-12">Popular Services</h2>
+            
+            <!-- Service Categories -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mb-12">
+                <div class="bg-blue-50 p-4 rounded-lg text-center cursor-pointer hover:bg-blue-100 transition" onclick="filterServices('all')">
+                    <i class="fas fa-list text-3xl text-blue-600 mb-2"></i>
+                    <h3 class="font-semibold">All Services</h3>
+                </div>
+                <div class="bg-blue-50 p-4 rounded-lg text-center cursor-pointer hover:bg-blue-100 transition" onclick="filterServices('electrical')">
+                    <i class="fas fa-bolt text-3xl text-blue-600 mb-2"></i>
+                    <h3 class="font-semibold">Electrical</h3>
+                </div>
+                <div class="bg-blue-50 p-4 rounded-lg text-center cursor-pointer hover:bg-blue-100 transition" onclick="filterServices('plumbing')">
+                    <i class="fas fa-faucet text-3xl text-blue-600 mb-2"></i>
+                    <h3 class="font-semibold">Plumbing</h3>
+                </div>
+                <div class="bg-blue-50 p-4 rounded-lg text-center cursor-pointer hover:bg-blue-100 transition" onclick="filterServices('tutoring')">
+                    <i class="fas fa-book text-3xl text-blue-600 mb-2"></i>
+                    <h3 class="font-semibold">Tutoring</h3>
+                </div>
+            </div>
+            
+            <!-- Service Listings -->
+            <div id="serviceListings" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Services will be dynamically loaded here -->
+            </div>
+            
+            <div class="text-center mt-10">
+                <button class="bg-blue-600 text-white px-6 py-3 rounded-md font-bold hover:bg-blue-700 transition">
+                    View All Services
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section id="how-it-works" class="py-16 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center mb-12">How ServiceHub Works</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="bg-white p-6 rounded-lg shadow-md text-center">
+                    <div class="bg-blue-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-search text-blue-600 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">Find a Service</h3>
+                    <p class="text-gray-600">Browse through our wide range of professional services or search for what you need.</p>
+                </div>
+                
+                <div class="bg-white p-6 rounded-lg shadow-md text-center">
+                    <div class="bg-blue-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-user-check text-blue-600 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">Book & Connect</h3>
+                    <p class="text-gray-600">View provider profiles, read reviews, and book the service that fits your needs.</p>
+                </div>
+                
+                <div class="bg-white p-6 rounded-lg shadow-md text-center">
+                    <div class="bg-blue-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-check-circle text-blue-600 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">Get It Done</h3>
+                    <p class="text-gray-600">Your professional completes the job to your satisfaction. Payment is released only when you're happy.</p>
+                </div>
+            </div>
+            
+            <!-- Video Embed -->
+            <div class="mt-16 max-w-4xl mx-auto">
+                <h3 class="text-2xl font-semibold mb-6 text-center">See ServiceHub in Action</h3>
+                <div class="video-container shadow-lg rounded-lg overflow-hidden">
+                    <iframe src="https://www.youtube.com/embed/Dg56chdr-FQ" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section id="testimonials" class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center mb-12">What Our Users Say</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="bg-gray-50 p-6 rounded-lg shadow-sm">
+                    <div class="flex items-center mb-4">
+                        <div class="text-yellow-400 mr-2">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 mb-4">"Found an excellent electrician who fixed my wiring issues same day. The platform made it so easy to compare prices and reviews."</p>
+                    <div class="flex items-center">
+                        <img src="https://randomuser.me/api/portraits/women/43.jpg" alt="User" class="w-10 h-10 rounded-full mr-3">
+                        <div>
+                            <h4 class="font-semibold">Sarah Johnson</h4>
+                            <p class="text-sm text-gray-500">Homeowner</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-gray-50 p-6 rounded-lg shadow-sm">
+                    <div class="flex items-center mb-4">
+                        <div class="text-yellow-400 mr-2">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 mb-4">"As a tutor, ServiceHub has helped me find consistent students. The payment system is secure and the interface is user-friendly."</p>
+                    <div class="flex items-center">
+                        <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="User" class="w-10 h-10 rounded-full mr-3">
+                        <div>
+                            <h4 class="font-semibold">Michael Chen</h4>
+                            <p class="text-sm text-gray-500">Math Tutor</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-gray-50 p-6 rounded-lg shadow-sm">
+                    <div class="flex items-center mb-4">
+                        <div class="text-yellow-400 mr-2">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 mb-4">"The plumber I found through ServiceHub was professional and reasonably priced. I'll definitely use this platform again for home services."</p>
+                    <div class="flex items-center">
+                        <img src="https://randomuser.me/api/portraits/women/65.jpg" alt="User" class="w-10 h-10 rounded-full mr-3">
+                        <div>
+                            <h4 class="font-semibold">Emily Rodriguez</h4>
+                            <p class="text-sm text-gray-500">Apartment Renter</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Static Map Section -->
+    <section class="map-section py-16 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center mb-6">Our Location</h2>
+            <div class="map-container">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3022.215256024286!2d-73.98784492401778!3d40.74844097138985!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNDDCsDQ0JzU0LjQiTiA3M8KwNTknMDkuNyJX!5e0!3m2!1sen!2sus!4v1620000000000!5m2!1sen!2sus" width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+            </div>
+        </div>
+    </section>
+
+    <!-- Find Services Near You (Interactive Map) -->
+    <section class="py-16 bg-blue-600 text-white">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center mb-8">Find Services Near You</h2>
+            
+            <div class="max-w-4xl mx-auto bg-white rounded-lg overflow-hidden">
+                <div class="p-4 bg-blue-700">
+                    <div class="flex flex-col md:flex-row md:items-center md:justify-between">
+                        <div class="mb-4 md:mb-0">
+                            <h3 class="text-xl font-semibold">Your Location</h3>
+                            <p id="locationText" class="text-blue-100">Allow location access to see services near you</p>
+                        </div>
+                        <button onclick="getLocation()" class="bg-white text-blue-600 px-4 py-2 rounded-md font-medium hover:bg-blue-50">
+                            <i class="fas fa-location-arrow mr-2"></i> Detect My Location
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="p-4">
+                    <input id="pac-input" class="search-box" type="text" placeholder="Search for a location">
+                </div>
+                
+                <div id="map"></div>
+                
+                <div class="p-4 bg-gray-50 text-gray-800">
+                    <h3 class="text-lg font-semibold mb-2">Available Services in Your Area</h3>
+                    <div id="nearbyServices" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+                        <!-- Nearby services will be loaded here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center mb-12">Contact Us</h2>
+            
+            <div class="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div>
+                    <h3 class="text-xl font-semibold mb-4">Get in Touch</h3>
+                    <p class="text-gray-600 mb-6">Have questions or feedback? We'd love to hear from you!</p>
+                    
+                    <div class="space-y-4">
+                        <div class="flex items-start">
+                            <i class="fas fa-map-marker-alt text-blue-600 mt-1 mr-4"></i>
+                            <div>
+                                <h4 class="font-semibold">Address</h4>
+                                <p class="text-gray-600">123 Service Street, Professional City, PC 12345</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start">
+                            <i class="fas fa-phone-alt text-blue-600 mt-1 mr-4"></i>
+                            <div>
+                                <h4 class="font-semibold">Phone</h4>
+                                <p class="text-gray-600">(123) 456-7890</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start">
+                            <i class="fas fa-envelope text-blue-600 mt-1 mr-4"></i>
+                            <div>
+                                <h4 class="font-semibold">Email</h4>
+                                <p class="text-gray-600">support@servicehub.com</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-8">
+                        <h4 class="font-semibold mb-3">Follow Us</h4>
+                        <div class="flex space-x-4">
+                            <a href="#" class="bg-blue-100 text-blue-600 w-10 h-10 rounded-full flex items-center justify-center hover:bg-blue-200">
+                                <i class="fab fa-facebook-f"></i>
+                            </a>
+                            <a href="#" class="bg-blue-100 text-blue-600 w-10 h-10 rounded-full flex items-center justify-center hover:bg-blue-200">
+                                <i class="fab fa-twitter"></i>
+                            </a>
+                            <a href="#" class="bg-blue-100 text-blue-600 w-10 h-10 rounded-full flex items-center justify-center hover:bg-blue-200">
+                                <i class="fab fa-instagram"></i>
+                            </a>
+                            <a href="#" class="bg-blue-100 text-blue-600 w-10 h-10 rounded-full flex items-center justify-center hover:bg-blue-200">
+                                <i class="fab fa-linkedin-in"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div>
+                    <h3 class="text-xl font-semibold mb-4">Send Us a Message</h3>
+                    <form id="contactForm" class="space-y-4">
+                        <div>
+                            <label for="contactName" class="block text-gray-700 mb-1">Your Name</label>
+                            <input type="text" id="contactName" class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+                        </div>
+                        
+                        <div>
+                            <label for="contactEmail" class="block text-gray-700 mb-1">Your Email</label>
+                            <input type="email" id="contactEmail" class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+                        </div>
+                        
+                        <div>
+                            <label for="contactSubject" class="block text-gray-700 mb-1">Subject</label>
+                            <input type="text" id="contactSubject" class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+                        </div>
+                        
+                        <div>
+                            <label for="contactMessage" class="block text-gray-700 mb-1">Message</label>
+                            <textarea id="contactMessage" rows="4" class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" required></textarea>
+                        </div>
+                        
+                        <button type="submit" class="bg-blue-600 text-white px-6 py-2 rounded-md font-medium hover:bg-blue-700 transition">
+                            Send Message
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-xl font-bold mb-4 flex items-center">
+                        <i class="fas fa-tools mr-2"></i> ServiceHub
+                    </h3>
+                    <p class="text-gray-400">Connecting professionals with clients since 2023. Your trusted marketplace for quality services.</p>
+                </div>
+                
+                <div>
+                    <h4 class="font-semibold text-lg mb-4">Quick Links</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white transition">Home</a></li>
+                        <li><a href="#services" class="text-gray-400 hover:text-white transition">Services</a></li>
+                        <li><a href="#how-it-works" class="text-gray-400 hover:text-white transition">How It Works</a></li>
+                        <li><a href="#testimonials" class="text-gray-400 hover:text-white transition">Testimonials</a></li>
+                        <li><a href="#contact" class="text-gray-400 hover:text-white transition">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="font-semibold text-lg mb-4">Services</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white transition">Electrical</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition">Plumbing</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition">Tutoring</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition">Cleaning</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition">Handyman</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="font-semibold text-lg mb-4">Newsletter</h4>
+                    <p class="text-gray-400 mb-4">Subscribe to get updates on new services and promotions.</p>
+                    <form class="flex">
+                        <input type="email" placeholder="Your email" class="px-4 py-2 rounded-l-md focus:outline-none text-gray-800 w-full">
+                        <button type="submit" class="bg-blue-600 px-4 py-2 rounded-r-md hover:bg-blue-700 transition">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-700 mt-8 pt-8 flex flex-col md:flex-row justify-between items-center">
+                <p class="text-gray-400 mb-4 md:mb-0">© 2023 ServiceHub. All rights reserved.</p>
+                <div class="flex space-x-6">
+                    <a href="#" class="text-gray-400 hover:text-white transition">Privacy Policy</a>
+                    <a href="#" class="text-gray-400 hover:text-white transition">Terms of Service</a>
+                    <a href="#" class="text-gray-400 hover:text-white transition">Sitemap</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Audio Player (hidden by default) -->
+    <div id="audioPlayer" class="fixed bottom-4 right-4 bg-white shadow-xl rounded-lg p-4 hidden">
+        <div class="flex items-center justify-between mb-2">
+            <h4 class="font-semibold">ServiceHub Jingle</h4>
+            <button onclick="closeAudioPlayer()" class="text-gray-500 hover:text-gray-700">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <audio id="serviceAudio" controls>
+            <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+            Your browser does not support the audio element.
+        </audio>
+    </div>
+
+    <!-- Play Audio Button (fixed) -->
+    <button onclick="playAudio()" class="fixed bottom-4 left-4 bg-blue-600 text-white w-12 h-12 rounded-full shadow-lg flex items-center justify-center hover:bg-blue-700 transition">
+        <i class="fas fa-music"></i>
+    </button>
+
+    <!-- Load Google Maps API -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC_srTIDyFzPdLWJ9gmSgRSJ9EslOvvRWY&libraries=places&callback=initMap" async defer></script>
+
+    <script>
+        // Database simulation (in a real app, this would be server-side)
+        const servicesDatabase = [
+            {
+                id: 1,
+                title: "Electrical Wiring Installation",
+                category: "electrical",
+                description: "Professional electrical wiring installation for homes and offices. Certified electrician with 10+ years of experience.",
+                price: "$120 - $500",
+                rating: 4.8,
+                reviews: 42,
+                image: "https://images.unsplash.com/photo-1603302576837-37561b2e2302?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1468&q=80",
+                location: "Downtown"
+            },
+            {
+                id: 2,
+                title: "Leaky Faucet Repair",
+                category: "plumbing",
+                description: "Fast and reliable leaky faucet repair services. We fix all types of faucets with a 6-month guarantee.",
+                price: "$60 - $150",
+                rating: 4.7,
+                reviews: 35,
+                image: "https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
+                location: "Northside"
+            },
+            {
+                id: 3,
+                title: "Math Tutoring (High School)",
+                category: "tutoring",
+                description: "Experienced math tutor specializing in high school algebra, geometry, and calculus. Flexible scheduling available.",
+                price: "$40/hr",
+                rating: 4.9,
+                reviews: 28,
+                image: "https://images.unsplash.com/photo-1580894732444-8ecded7900cd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
+                location: "Eastside"
+            },
+            {
+                id: 4,
+                title: "Circuit Breaker Repair",
+                category: "electrical",
+                description: "Emergency circuit breaker repair services available 24/7. Licensed and insured electricians.",
+                price: "$80 - $200",
+                rating: 4.6,
+                reviews: 19,
+                image: "https://images.unsplash.com/photo-1605152276897-4f618f831968?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
+                location: "Westside"
+            },
+            {
+                id: 5,
+                title: "Drain Cleaning",
+                category: "plumbing",
+                description: "Clogged drain? We use state-of-the-art equipment to clear any blockage quickly and effectively.",
+                price: "$75 - $175",
+                rating: 4.5,
+                reviews: 31,
+                image: "https://images.unsplash.com/photo-1603302576837-37561b2e2302?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1468&q=80",
+                location: "Southside"
+            },
+            {
+                id: 6,
+                title: "English Language Tutoring",
+                category: "tutoring",
+                description: "ESL and English literature tutoring for all levels. Customized lessons based on your needs and goals.",
+                price: "$35/hr",
+                rating: 4.8,
+                reviews: 23,
+                image: "https://images.unsplash.com/photo-1546410531-bb4caa6b424d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1471&q=80",
+                location: "Central"
+            }
+        ];
+
+        // Nearby services database (would come from geolocation query in real app)
+        const nearbyServicesDatabase = [
+            {
+                id: 101,
+                title: "Emergency Electrician",
+                distance: "0.5 miles",
+                rating: 4.7,
+                price: "$90 - $250"
+            },
+            {
+                id: 102,
+                title: "Plumber - Water Heater",
+                distance: "1.2 miles",
+                rating: 4.8,
+                price: "$120 - $350"
+            },
+            {
+                id: 103,
+                title: "Math Tutor - Calculus",
+                distance: "0.8 miles",
+                rating: 4.9,
+                price: "$45/hr"
+            }
+        ];
+
+        // DOM Elements
+        const mobileMenu = document.getElementById('mobileMenu');
+        const loginDrawer = document.getElementById('loginDrawer');
+        const serviceListings = document.getElementById('serviceListings');
+        const nearbyServices = document.getElementById('nearbyServices');
+        const locationText = document.getElementById('locationText');
+        const audioPlayer = document.getElementById('audioPlayer');
+        const contactForm = document.getElementById('contactForm');
+        const loginForm = document.getElementById('loginForm');
+        const registerForm = document.getElementById('registerForm');
+
+        // Map variables
+        let map;
+        let markers = [];
+        let infoWindow;
+        let autocomplete;
+
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', function() {
+            loadServices('all');
+            
+            // Form submission handlers
+            contactForm.addEventListener('submit', handleContactSubmit);
+            loginForm.addEventListener('submit', handleLoginSubmit);
+            registerForm.addEventListener('submit', handleRegisterSubmit);
+        });
+
+        // Initialize Google Map
+        function initMap() {
+            // Default to New York if geolocation not available
+            const defaultLocation = { lat: 40.7128, lng: -74.0060 };
+            
+            // Create the map
+            map = new google.maps.Map(document.getElementById('map'), {
+                center: defaultLocation,
+                zoom: 12,
+                mapTypeControl: true,
+                streetViewControl: true,
+                fullscreenControl: true
+            });
+
+            // Create the search box and link it to the UI element.
+            const input = document.getElementById('pac-input');
+            autocomplete = new google.maps.places.Autocomplete(input);
+            
+            // Bias the search results towards current map's viewport.
+            autocomplete.bindTo('bounds', map);
+            
+            // Set up event listener for when a place is selected
+            autocomplete.addListener('place_changed', () => {
+                const place = autocomplete.getPlace();
+                if (!place.geometry) {
+                    // User entered the name of a Place that was not suggested and
+                    // pressed the Enter key, or the Place Details request failed.
+                    console.log("No details available for input: '" + place.name + "'");
+                    return;
+                }
+                
+                // Update location text
+                locationText.innerHTML = `<i class="fas fa-check-circle text-green-400 mr-1"></i> Selected location: ${place.name}`;
+                
+                // If the place has a geometry, then present it on a map.
+                if (place.geometry.viewport) {
+                    map.fitBounds(place.geometry.viewport);
+                } else {
+                    map.setCenter(place.geometry.location);
+                    map.setZoom(15);
+                }
+                
+                // Clear existing markers
+                clearMarkers();
+                
+                // Add a marker for the selected place
+                addMarker(place.geometry.location, place.name);
+                
+                // Load nearby services (simulated)
+                loadNearbyServices();
+            });
+
+            // Create an info window to share between markers.
+            infoWindow = new google.maps.InfoWindow();
+
+            // Add click listener to close info window when clicking on map
+            map.addListener('click', () => {
+                infoWindow.close();
+            });
+        }
+
+        // Adds a marker to the map and push to the array.
+        function addMarker(location, title) {
+            const marker = new google.maps.Marker({
+                position: location,
+                map: map,
+                title: title || 'Your location'
+            });
+            
+            markers.push(marker);
+            
+            // Add info window to marker
+            marker.addListener('click', () => {
+                infoWindow.setContent(title || 'Your location');
+                infoWindow.open(map, marker);
+            });
+        }
+
+        // Sets the map on all markers in the array.
+        function setMapOnAll(map) {
+            for (let i = 0; i < markers.length; i++) {
+                markers[i].setMap(map);
+            }
+        }
+
+        // Removes the markers from the map, but keeps them in the array.
+        function clearMarkers() {
+            setMapOnAll(null);
+            markers = [];
+        }
+
+        // Shows any markers currently in the array.
+        function showMarkers() {
+            setMapOnAll(map);
+        }
+
+        // Functions
+        function toggleMobileMenu() {
+            mobileMenu.classList.toggle('hidden');
+        }
+
+        function loadServices(category) {
+            serviceListings.innerHTML = '';
+            
+            const servicesToShow = category === 'all' 
+                ? servicesDatabase 
+                : servicesDatabase.filter(service => service.category === category);
+            
+            servicesToShow.forEach(service => {
+                const serviceCard = document.createElement('div');
+                serviceCard.className = 'bg-white rounded-lg overflow-hidden shadow-md service-card transition duration-300';
+                serviceCard.innerHTML = `
+                    <img src="${service.image}" alt="${service.title}" class="w-full h-48 object-cover">
+                    <div class="p-4">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="text-lg font-semibold">${service.title}</h3>
+                            <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded">${service.location}</span>
+                        </div>
+                        <p class="text-gray-600 text-sm mb-3">${service.description}</p>
+                        <div class="flex items-center mb-3">
+                            <div class="text-yellow-400 mr-2">
+                                ${renderStars(service.rating)}
+                            </div>
+                            <span class="text-gray-500 text-sm">(${service.reviews} reviews)</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="font-bold text-blue-600">${service.price}</span>
+                            <button onclick="window.location.href='booking.html'" class="bg-blue-600 text-white px-3 py-1 rounded text-sm hover:bg-blue-700 transition">
+                                Book Now
+                            </button>
+                        </div>
+                    </div>
+                `;
+                serviceListings.appendChild(serviceCard);
+            });
+        }
+
+        function filterServices(category) {
+            loadServices(category);
+        }
+
+        function renderStars(rating) {
+            let stars = '';
+            const fullStars = Math.floor(rating);
+            const hasHalfStar = rating % 1 >= 0.5;
+            
+            for (let i = 0; i < fullStars; i++) {
+                stars += '<i class="fas fa-star"></i>';
+            }
+            
+            if (hasHalfStar) {
+                stars += '<i class="fas fa-star-half-alt"></i>';
+            }
+            
+            const emptyStars = 5 - fullStars - (hasHalfStar ? 1 : 0);
+            for (let i = 0; i < emptyStars; i++) {
+                stars += '<i class="far fa-star"></i>';
+            }
+            
+            return stars;
+        }
+
+        function getLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    showPosition,
+                    showError,
+                    { enableHighAccuracy: true }
+                );
+            } else {
+                locationText.textContent = "Geolocation is not supported by this browser.";
+            }
+        }
+
+        function showPosition(position) {
+            const lat = position.coords.latitude;
+            const lng = position.coords.longitude;
+            const location = new google.maps.LatLng(lat, lng);
+            
+            // Update location text
+            locationText.innerHTML = `<i class="fas fa-check-circle text-green-400 mr-1"></i> Your location: ${lat.toFixed(4)}, ${lng.toFixed(4)}`;
+            
+            // Update map
+            map.setCenter(location);
+            map.setZoom(15);
+            
+            // Clear existing markers
+            clearMarkers();
+            
+            // Add marker for current location
+            addMarker(location, 'Your location');
+            
+            // Show nearby services
+            loadNearbyServices();
+            
+            // Reverse geocode to get address
+            const geocoder = new google.maps.Geocoder();
+            geocoder.geocode({ location: location }, (results, status) => {
+                if (status === 'OK') {
+                    if (results[0]) {
+                        document.getElementById('pac-input').value = results[0].formatted_address;
+                    }
+                }
+            });
+        }
+
+        function showError(error) {
+            switch(error.code) {
+                case error.PERMISSION_DENIED:
+                    locationText.textContent = "You denied the request for geolocation.";
+                    break;
+                case error.POSITION_UNAVAILABLE:
+                    locationText.textContent = "Location information is unavailable.";
+                    break;
+                case error.TIMEOUT:
+                    locationText.textContent = "The request to get user location timed out.";
+                    break;
+                case error.UNKNOWN_ERROR:
+                    locationText.textContent = "An unknown error occurred.";
+                    break;
+            }
+            
+            // Fallback to default location
+            const defaultLocation = new google.maps.LatLng(40.7128, -74.0060);
+            map.setCenter(defaultLocation);
+            map.setZoom(12);
+            
+            // Clear existing markers
+            clearMarkers();
+            
+            // Add marker for default location
+            addMarker(defaultLocation, 'Default location (New York)');
+        }
+
+        function loadNearbyServices() {
+            nearbyServices.innerHTML = '';
+            
+            nearbyServicesDatabase.forEach(service => {
+                const serviceItem = document.createElement('div');
+                serviceItem.className = 'bg-white p-3 rounded shadow-sm';
+                serviceItem.innerHTML = `
+                    <h4 class="font-semibold mb-1">${service.title}</h4>
+                    <div class="flex items-center text-sm text-gray-600 mb-1">
+                        <i class="fas fa-map-marker-alt mr-1 text-blue-500"></i>
+                        ${service.distance} away
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <div class="text-yellow-400 text-sm">
+                            ${renderStars(service.rating)}
+                        </div>
+                        <span class="text-blue-600 font-medium">${service.price}</span>
+                    </div>
+                `;
+                nearbyServices.appendChild(serviceItem);
+            });
+        }
+
+        function playAudio() {
+            audioPlayer.classList.remove('hidden');
+            document.getElementById('serviceAudio').play();
+        }
+
+        function closeAudioPlayer() {
+            audioPlayer.classList.add('hidden');
+            document.getElementById('serviceAudio').pause();
+        }
+
+        function handleContactSubmit(e) {
+            e.preventDefault();
+            
+            // Get form values
+            const name = document.getElementById('contactName').value;
+            const email = document.getElementById('contactEmail').value;
+            const subject = document.getElementById('contactSubject').value;
+            const message = document.getElementById('contactMessage').value;
+            
+            // In a real app, this would be sent to a server
+            console.log('Contact form submitted:', { name, email, subject, message });
+            
+            // Show success message
+            alert('Thank you for your message! We will get back to you soon.');
+            
+            // Reset form
+            contactForm.reset();
+        }
+
+        function handleLoginSubmit(e) {
+            e.preventDefault();
+            
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            
+            // In a real app, this would validate with a server
+            console.log('Login attempt:', { email, password });
+            
+            // Simulate successful login
+            alert('Login successful! (This is a demo)');
+            toggleLoginDrawer();
+        }
+
+        function handleRegisterSubmit(e) {
+            e.preventDefault();
+            
+            const name = document.getElementById('regName').value;
+            const email = document.getElementById('regEmail').value;
+            const password = document.getElementById('regPassword').value;
+            const userType = document.getElementById('userType').value;
+            
+            // In a real app, this would be sent to a server
+            console.log('Registration:', { name, email, password, userType });
+            
+            // Show success message
+            alert(`Thank you for registering as a ${userType === 'buyer' ? 'service buyer' : 'service provider'}! (This is a demo)`);
+            
+            // Reset form and close drawer
+            registerForm.reset();
+            toggleLoginDrawer();
+        }
+    </script>
+</body>
+</html>
